@@ -15,15 +15,21 @@ public class Student {
 
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
+    @Transient
     private long age;
 
     @OneToOne
     private Address address;
+
+    @ElementCollection
+    @CollectionTable(name = "Phone")
+    List<String> phoneNumbers;
 
     public Student() {
     }
@@ -39,6 +45,11 @@ public class Student {
     public Student(String name, String email, Date dateOfBirth, Address address) {
         this(name, email, dateOfBirth);
         this.address = address;
+    }
+
+    public Student(String name, String email, Date dateOfBirth, Address address, List<String> phoneNumbers) {
+        this(name, email, dateOfBirth, address);
+        this.phoneNumbers = phoneNumbers;
     }
 
     public long getId() {
